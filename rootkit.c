@@ -211,6 +211,10 @@ struct dirent64 *readdir64(DIR *dirp)
 
 
 /**
+* TODO: Get them to complete fopen64() and fopen()
+*
+
+/**
 * fopen64() is the same as fopen() but supports large files
 *
 * From the manpage: The fopen64() function is identical to the 
