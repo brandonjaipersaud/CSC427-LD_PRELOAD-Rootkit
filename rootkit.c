@@ -226,6 +226,9 @@ struct dirent64 *readdir64(DIR *dirp)
 *
 */
 
+
+/*  Uncomment block comment when ready!
+
 FILE *(*orig_fopen)(const char *pathname, const char *mode);
 FILE *fopen(const char *pathname, const char *mode)
 {
@@ -258,3 +261,5 @@ FILE *fopen(const char *pathname, const char *mode)
 	fp = orig_fopen(pathname, mode);
 	return fp;
 }
+
+*/
